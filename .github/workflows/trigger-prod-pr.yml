@@ -23,7 +23,7 @@ jobs:
           TOKEN: ${{ secrets.PROD_REPO_PAT }}
         run: |
           git clone https://x-access-token:${TOKEN}@github.com/AkashYohannan/DAB_POC_prod.git prod-repo
-          cp -r * ./prod-repo/
+          rsync -av --exclude=prod-repo ./ ./prod-repo/
           cd prod-repo
           git checkout -b prod-sync-${{ github.run_number }}
           git add .
