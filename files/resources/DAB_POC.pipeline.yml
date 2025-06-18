@@ -3,7 +3,7 @@ resources:
   pipelines:
     DAB_POC_pipeline:
       name: DAB_POC_pipeline
-      catalog: dab_poc_504630645111494
+      catalog: dab_poc_dev
       schema: DAB_POC_${bundle.target}
       libraries:
         - notebook:
