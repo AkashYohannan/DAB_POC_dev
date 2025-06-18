@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Default
+
+variables:
+  DATABRICKS_HOST: $(DATABRICKS_HOST)
+  DATABRICKS_TOKEN: $(TOKEN)
+
+steps:
+
+  - script: |
+      cd files
+      pip install databricks-cli
+      databricks bundle validate
+      databricks bundle deploy
+    env:
+      DATABRICKS_HOST: $(DATABRICKS_HOST)
+      DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
