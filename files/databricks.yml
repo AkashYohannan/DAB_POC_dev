@@ -16,7 +16,7 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://adb-504630645111494.14.azuredatabricks.net
+      host: https://adb-148758803174965.5.azuredatabricks.net
       root_path: /Workspace/Users/ashgoku60@gmail.com/DAB_POC
 
   prod:
