@@ -6,9 +6,6 @@ trigger:
 pool:
   name: Default
 
-# variables:
-#   DATABRICKS_HOST: $(DATABRICKS_HOST)
-#   DATABRICKS_TOKEN: $(TOKEN)
 
 steps:
 
