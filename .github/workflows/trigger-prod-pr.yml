@@ -1,1 +1,41 @@
+name: Trigger Prod PR
 
+on:
+  push:
+    branches:
+      - main  # or any other trigger branch in your dev repo
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Dev Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "akashyohannan.y@outlook.com"
+          git config --global user.name "AkashYohannan"
+
+      - name: Clone Prod Repo
+        env:
+          TOKEN: ${{ secrets.PROD_REPO_PAT }}
+        run: |
+          git clone https://x-access-token:${TOKEN}@github.com/AkashYohannan/DAB_POC_prod.git prod-repo
+          cp -r * ./prod-repo/
+          cd prod-repo
+          git checkout -b prod-sync-${{ github.run_number }}
+          git add .
+          git commit -m "Sync from dev - ${{ github.sha }}"
+          git push origin prod-sync-${{ github.run_number }}
+
+      - name: Create PR to Prod Main
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.PROD_REPO_PAT }}
+          repository: AkashYohannan/DAB_POC_prod
+          title: "Deploy to Prod from Dev Repo"
+          body: "This PR was auto-created after successful Dev deployment"
+          base: main
+          head: prod-sync-${{ github.run_number }}
